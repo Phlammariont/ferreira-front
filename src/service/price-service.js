@@ -1,10 +1,15 @@
 import {firebaseService} from './firebase'
 
 
-const save = (model) => {
-  firebaseService.savePrice(model)
+const save = (price) => {
+  firebaseService.saveModel({collection: 'price-list', model: price})
+}
+
+const getPrices = async () => {
+  return await firebaseService.getModel('price-list')
 }
 
 export default {
-  save
+  save,
+  getPrices
 }

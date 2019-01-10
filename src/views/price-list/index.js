@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import priceService from '../../service/price-service'
+import {map, mapObjIndexed, values} from 'ramda'
 
 const styles = {
   fab: {
@@ -33,6 +34,13 @@ class PriceList extends Component{
     }
   }
 
+  componentDidMount () {
+    priceService.getPrices()
+      .then(priceList => {
+        return this.setState({priceList})
+      })
+  }
+
   openNewPrice = () => (
     this.setState({newPriceFormOpen: true})
   )
@@ -43,6 +51,7 @@ class PriceList extends Component{
 
   savePrice = () => {
     priceService.save(this.state.newPrice)
+    this.setState({priceList: [...this.state.priceList, this.state.newPrice], newPriceFormOpen: false})
   }
 
   handleChange = (field) => ( evt ) => {
@@ -65,10 +74,7 @@ class PriceList extends Component{
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>Cama Doble</TableCell>
-              <TableCell>1000000</TableCell>
-            </TableRow>
+            {this.state.priceList && map(Row, this.state.priceList)}
           </TableBody>
         </Table>
         <Fab
@@ -119,5 +125,13 @@ class PriceList extends Component{
     )
   }
 }
+
+const Row = item => (
+  <TableRow key={item.name + item.price}>
+    {values(mapObjIndexed(Cell, item))}
+  </TableRow>
+)
+
+const Cell = field => <TableCell key={field}>{field}</TableCell>
 
 export default withStyles(styles)(PriceList)

@@ -11,18 +11,19 @@ firebase.initializeApp(config)
 const db = firebase.firestore()
 
 
-const initDB = async () => {
-  const priceListSnapshot = await db.collection('price-list').get()
-  priceListSnapshot.forEach( doc => console.log(doc.data()))
-
+const getModel = async (collection) => {
+  const modelSnapshot = await db.collection(collection).get()
+  let docs = []
+  modelSnapshot.forEach(doc => docs = [...docs, doc.data()])
+  return docs
 }
 
 
-const savePrice = (price) => {
-  db.collection('price-list').add(price)
+const saveModel = ({model, collection}) => {
+  db.collection(collection).add(model)
 }
 
-initDB()
 export const firebaseService = {
-  savePrice
+  saveModel,
+  getModel
 }
