@@ -23,7 +23,16 @@ const saveModel = ({model, collection}) => {
   db.collection(collection).add(model)
 }
 
+const addCallback = (collection, b, callback) => {
+  return db.collection(collection).onSnapshot(querySnapshot => {
+    let docs = []
+    querySnapshot.forEach(doc => docs = [...docs, doc.data()])
+    return callback(docs)
+  })
+}
+
 export const firebaseService = {
   saveModel,
-  getModel
+  getModel,
+  addCallback
 }

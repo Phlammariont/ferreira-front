@@ -5,11 +5,16 @@ const save = (price) => {
   firebaseService.saveModel({collection: 'price-list', model: price})
 }
 
-const getPrices = async () => {
+const get = async () => {
   return await firebaseService.getModel('price-list')
+}
+
+const onAdd = (callback) => {
+  return firebaseService.addCallback('price-list', 'add', callback)
 }
 
 export default {
   save,
-  getPrices
+  get,
+  onAdd
 }
