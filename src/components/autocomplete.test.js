@@ -9,10 +9,9 @@ const unmountAutocomplete = (component) => {
 }
 
 const createAutocomplete = ( props = {} ) => {
-  const { getByLabelText, getByText, container, asFragment } = render(
+  return render(
     <Autocomplete {...props}/>,
   )
-  return { getByLabelText, getByText, container }
 }
 
 afterEach(cleanup)
@@ -43,10 +42,25 @@ describe('Suit tests for Autocomplete Component', () => {
       () => getByText('leon'),
     )
   })
-  it('dont render a list when 3 characters on the input with no matches', () => {})
-  it('can be navigated with arrow keys', () => {})
-  it('An option can be selected on click', () => {})
-})
+  it('dont render a list when 3 characters on the input with no matches', async () => {
+    const LABEL = 'users'
+    const { getByLabelText, getByText, getByTestId } = createAutocomplete({
+      data: [{name: 'leon'}],
+      itemField: 'name',
+      label: LABEL,
+    })
+    const input = getByLabelText(LABEL)
+    expect(input).toBeDefined()
+    fireEvent.change(input, { target: { value: 'ccc' } })
+    const list = await waitForElement(
+      () => getByTestId('autocomplete-list'),
+    )
+    expect(list).toContainHTML('')
+  })
+  it('can be navigated with arrow keys', () => {
 
-const findInput = autoComplete => autoComplete.childNodes[0].childNodes[0].childNodes[0].childNodes[0]
-const getTypeName = element => element
+  })
+  it('An option can be selected on click', () => {
+
+  })
+})

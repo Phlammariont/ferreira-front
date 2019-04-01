@@ -40,11 +40,9 @@ class NewPriceEstimation extends Component{
             Nombre del producto y valor.
           </DialogContentText>
           <Autocomplete
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Cliente"
-            type="email"
+            data={this.props.customers}
+            label='Customer'
+            itemField='name'
             fullWidth
             onChange={this.handleChange('customer')}
           />

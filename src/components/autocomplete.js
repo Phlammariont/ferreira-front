@@ -47,7 +47,7 @@ const renderList = ({
   ...listProps
 }) => {
   return (
-    <ul {...getMenuProps()}>
+    <ul {...getMenuProps()} data-testid="autocomplete-list" >
       {renderItems(listProps)}
     </ul>
   )
