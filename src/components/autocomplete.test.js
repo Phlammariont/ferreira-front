@@ -1,12 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
 import {render, fireEvent, cleanup, waitForElement} from 'react-testing-library'
 import 'jest-dom/extend-expect'
-import Autocomplete from './autocomplete';
-
-const unmountAutocomplete = (component) => {
-  ReactDOM.unmountComponentAtNode(component);
-}
+import Autocomplete from './autocomplete'
 
 const createAutocomplete = ( props = {} ) => {
   return render(
@@ -14,11 +9,12 @@ const createAutocomplete = ( props = {} ) => {
   )
 }
 
-afterEach(cleanup)
-
 describe('Suit tests for Autocomplete Component', () => {
+  afterEach(cleanup)
+
   it('renders without crashing', () => {
     const { container } = createAutocomplete()
+    expect(container).toBeDefined()
   })
 
   it('render an input', () => {
@@ -41,6 +37,8 @@ describe('Suit tests for Autocomplete Component', () => {
     const usernameElement = await waitForElement(
       () => getByText('leon'),
     )
+    expect(usernameElement).toBeDefined()
+    expect(usernameElement).toBeVisible()
   })
   it('dont render a list when 3 characters on the input with no matches', async () => {
     const LABEL = 'users'
@@ -56,5 +54,25 @@ describe('Suit tests for Autocomplete Component', () => {
       () => getByTestId('autocomplete-list'),
     )
     expect(list).toContainHTML('')
+  })
+
+  it('let the suer select an option', async () => {
+    const onChange = jest.fn()
+    const LABEL = 'users'
+    const { getByLabelText, getByText } = createAutocomplete({
+      data: [{name: 'alejandra'}, {name: 'leon'}],
+      itemField: 'name',
+      label: LABEL,
+      onChange
+    })
+    const input = getByLabelText(LABEL)
+    expect(input).toBeDefined()
+    fireEvent.change(input, { target: { value: 'leo' } })
+    const option = await waitForElement(
+      () => getByText('leon'),
+    )
+    fireEvent.click(option)
+    expect(onChange).toHaveBeenCalled()
+    expect(onChange.mock.calls[0][0]).toEqual({name: 'leon'})
   })
 })

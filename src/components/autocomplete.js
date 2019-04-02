@@ -8,7 +8,7 @@ class Autocomplete extends Component{
     const {label, data, itemField} = this.props
     return (
       <Downshift
-        onChange={selection => alert(`You selected ${propOr('', itemField)(selection)}`)}
+        onChange={this.props.onChange}
         itemToString={propOr('', itemField)}
       >
         {renderComponents({ label, data, itemField })}

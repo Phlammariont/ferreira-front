@@ -19,11 +19,11 @@ class NewPriceEstimation extends Component{
     }
   }
 
-  handleChange = (field) => ( evt ) => {
+  handleChange = field => selection => {
     this.setState({
       newEstimation: {
         ...this.state.newEstimation,
-        [field]: evt.target.value
+        [field]: selection.id
       }
     })
   }
@@ -46,14 +46,14 @@ class NewPriceEstimation extends Component{
             label='Customer'
             itemField='name'
             fullWidth
-            onChange={this.handleChange('customer')}
+            onChange={this.handleChange('customerId')}
           />
           <Autocomplete
             data={this.props.products}
             label='Product'
             itemField='name'
             fullWidth
-            onChange={this.handleChange('products')}
+            onChange={this.handleChange('productId')}
           />
         </DialogContent>
         <DialogActions>
