@@ -57,10 +57,4 @@ describe('Suit tests for Autocomplete Component', () => {
     )
     expect(list).toContainHTML('')
   })
-  it('can be navigated with arrow keys', () => {
-
-  })
-  it('An option can be selected on click', () => {
-
-  })
 })

@@ -1,11 +1,13 @@
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import React, {Component} from 'react'
 import priceService from '../../service/price-service'
 import Autocomplete from '../../components/autocomplete'
+import { getCustomerCollection } from '../../selectors/customer'
+import { getProductCollection } from '../../selectors/product'
+import {connect} from 'react-redux'
 
 class NewPriceEstimation extends Component{
   constructor (props) {
@@ -47,10 +49,9 @@ class NewPriceEstimation extends Component{
             onChange={this.handleChange('customer')}
           />
           <Autocomplete
-            margin="dense"
-            id="name"
-            label="Productos"
-            type="number"
+            data={this.props.products}
+            label='Product'
+            itemField='name'
             fullWidth
             onChange={this.handleChange('products')}
           />
@@ -60,7 +61,7 @@ class NewPriceEstimation extends Component{
             Cancel
           </Button>
           <Button onClick={this.saveEstimation} color="primary">
-            Guardar
+            Save
           </Button>
         </DialogActions>
       </div>
@@ -68,4 +69,9 @@ class NewPriceEstimation extends Component{
   }
 }
 
-export default NewPriceEstimation
+const stateToProps = state => ({
+  customers: getCustomerCollection(state),
+  products: getProductCollection(state)
+})
+
+export default connect(stateToProps)(NewPriceEstimation)
