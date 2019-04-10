@@ -2,21 +2,22 @@ import {render, fireEvent, waitForElement, cleanup} from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import NewPriceEstimation from './NewPriceEstimation'
 import React from 'react'
-import store from '../../redux'
+import createAppStore from '../../redux'
 import {Provider} from 'react-redux'
+
+const createForm = ({initialState = {}, props={}}) => {
+  return render(
+    <Provider store={createAppStore(initialState)}>
+      <NewPriceEstimation {...props}/>,
+    </Provider>
+  )
+}
 
 describe('In a suit test for NewPriceEstimation Component', () => {
   afterEach(cleanup)
 
-  const createForm = ({initialState = {}, props}) => {
-    return render(
-      <Provider store={store(initialState)}>
-        <NewPriceEstimation {...props}/>,
-      </Provider>
-    )
-  }
   it('Should have 2 autocompletes', () => {
-    const { getByLabelText, getByText } = createForm({})
+    const { getByLabelText, getByText } = createForm({initialState:{}})
     expect( getByLabelText('Customer') ).toBeDefined()
     expect( getByLabelText('Product') ).toBeDefined()
     expect( getByText('Save') ).toBeDefined()

@@ -1,21 +1,19 @@
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
-import React, {Component} from 'react'
 import priceService from '../../service/price-service'
 import Autocomplete from '../../components/autocomplete'
 import { getCustomerCollection } from '../../selectors/customer'
 import { getProductCollection } from '../../selectors/product'
-import {connect} from 'react-redux'
 
 class NewPriceEstimation extends Component{
   constructor (props) {
     super(props)
     this.state = {
-      newEstimation: {
-
-      }
+      newEstimation: {}
     }
   }
 

@@ -8,6 +8,9 @@ import Drawer from './components/drawer'
 import PriceList from './views/price-list'
 import PriceEstimate from './views/price-estimate'
 import Customer from './views/customer'
+import ComponentIndex from './views/components'
+
+export const appStore  = store({})
 
 class App extends Component {
   constructor (props) {
@@ -21,7 +24,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store({})}>
+      <Provider store={appStore}>
         <BrowserRouter>
           <div className="App">
             <NavBar openDrawer={this.toggleDrawer(true)}/>
@@ -40,6 +43,7 @@ const Routes = props => (
     <Route path="/price-list" component={PriceList} />
     <Route path="/price-estimate" component={PriceEstimate} />
     <Route path="/customer" component={Customer} />
+    <Route path="/super-component-index" component={ComponentIndex} />
   </Switch>
 )
 

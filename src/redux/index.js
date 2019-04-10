@@ -1,7 +1,13 @@
-import { createStore } from 'redux'
-import { combineReducers } from 'redux'
-import customer from './reducers/customer'
+import { applyMiddleware, createStore } from 'redux'
+import epics from '../epics'
+import {createEpicMiddleware} from 'redux-observable'
+import rootReducer from './reducers'
 
-export default initialState => createStore(combineReducers({
-  customer,
-}), initialState)
+const createAppStore = initialState => {
+  const epicMiddleware = createEpicMiddleware()
+  const store = createStore(rootReducer, initialState, applyMiddleware(epicMiddleware))
+  epicMiddleware.run(epics)
+  return store
+}
+
+export default createAppStore
