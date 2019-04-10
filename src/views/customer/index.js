@@ -3,6 +3,9 @@ import Crud from '../../components/crud'
 import customer from '../../model/customer'
 import NewCustomerForm from './NewCustomerForm'
 import customerService from '../../service/customer'
+import {getCustomerCollection} from '../../selectors/customer'
+import { fetchCustomers } from '../../redux/actions/creators/customer'
+import {connect} from 'react-redux'
 
 class CustomerView extends Component {
   constructor (props) {
@@ -13,20 +16,25 @@ class CustomerView extends Component {
   }
 
   componentDidMount () {
-    customerService.get()
-      .then(customers => {
-        return this.setState({customers})
-      })
+    this.props.fetchCustomers()
     customerService.onAdd(customers => this.setState({customers}))
   }
 
   render () {
     return (
       <main>
-        <Crud model={customer} newModelForm={NewCustomerForm} collection={this.state.customers}/>
+        <Crud model={customer} newModelForm={NewCustomerForm} collection={this.props.customers}/>
       </main>
     )
   }
 }
 
-export default CustomerView
+const mapActions = {
+  fetchCustomers
+}
+
+const stateToProps = state => ({
+  customers: getCustomerCollection(state),
+})
+
+export default connect(stateToProps, mapActions)(CustomerView)
