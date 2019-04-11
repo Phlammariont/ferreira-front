@@ -4,7 +4,7 @@ import customer from '../../model/customer'
 import NewCustomerForm from './NewCustomerForm'
 import customerService from '../../service/customer'
 import {getCustomerCollection} from '../../selectors/customer'
-import { fetchCustomers } from '../../redux/actions/creators/customer'
+import { fetchCustomers, setCustomerCollection } from '../../redux/actions/creators/customer'
 import {connect} from 'react-redux'
 
 class CustomerView extends Component {
@@ -16,8 +16,7 @@ class CustomerView extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchCustomers()
-    customerService.onAdd(customers => this.setState({customers}))
+    customerService.onAdd(this.props.setCustomerCollection)
   }
 
   render () {
@@ -30,7 +29,8 @@ class CustomerView extends Component {
 }
 
 const mapActions = {
-  fetchCustomers
+  fetchCustomers,
+  setCustomerCollection
 }
 
 const stateToProps = state => ({

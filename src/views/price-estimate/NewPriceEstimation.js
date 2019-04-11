@@ -4,7 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
-import priceService from '../../service/price-service'
+import quotationService from '../../service/quotation'
 import Autocomplete from '../../components/autocomplete'
 import { getCustomerCollection } from '../../selectors/customer'
 import { getProductCollection } from '../../selectors/product'
@@ -21,13 +21,13 @@ class NewPriceEstimation extends Component{
     this.setState({
       newEstimation: {
         ...this.state.newEstimation,
-        [field]: selection.id
+        [field]: selection
       }
     })
   }
 
-  saveEstimation = () => {
-    priceService.save(this.state.newEstimation)
+  saveEstimation = async () => {
+    await quotationService.save(this.state.newEstimation)
     this.setState({newEstimation: {}})
     this.props.onClose()
   }
@@ -44,14 +44,14 @@ class NewPriceEstimation extends Component{
             label='Customer'
             itemField='name'
             fullWidth
-            onChange={this.handleChange('customerId')}
+            onChange={this.handleChange('customer')}
           />
           <Autocomplete
             data={this.props.products}
             label='Product'
             itemField='name'
             fullWidth
-            onChange={this.handleChange('productId')}
+            onChange={this.handleChange('product')}
           />
         </DialogContent>
         <DialogActions>

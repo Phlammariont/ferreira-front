@@ -6,11 +6,7 @@ const save = (customer) => {
 }
 
 const get = async () => {
-  try {
-    return await firebaseService.getModel('customer')
-  } catch (e) {
-    return []
-  }
+  return await firebaseService.getModel('customer')
 }
 
 const onAdd = (callback) => {

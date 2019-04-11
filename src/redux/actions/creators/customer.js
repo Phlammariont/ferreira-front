@@ -10,6 +10,6 @@ export const setCustomerCollection = customers => ({
 })
 
 export const addToCustomerCollection = customers => ({
-  type: customers.ADD_TO_COLLECTION,
+  type: customer.ADD_TO_COLLECTION,
   collection: customers
 })

@@ -1,4 +1,4 @@
-import {render, fireEvent, waitForElement, cleanup} from 'react-testing-library'
+import {render, cleanup} from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import CustomerView from './index'
 import React from 'react'
@@ -16,7 +16,7 @@ describe('In a suit test for CustomerView Component', () => {
     )
   }
   it('Render without crashing ', () => {
-    const { getByLabelText, getByText } = createView({})
+    createView({})
   })
   it('render a list of customers', () => {
     const { getByText } = createView({ initialState: { customer: { collection: [ {name: 'leon', email: 'leon@ferreira.com'} ] } } })
