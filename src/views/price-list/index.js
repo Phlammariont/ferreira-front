@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import priceService from '../../service/price-service'
 import Crud from '../../components/crud'
-import priceList from '../../model/priceList'
+import product from '../../model/product'
 import NewPriceForm from './new-price-list'
 
 class PriceList extends Component{
@@ -24,7 +24,7 @@ class PriceList extends Component{
     return (
       <div>
         <Crud
-          model={priceList}
+          model={product}
           collection={this.state.priceList}
           newModelForm={NewPriceForm}/>
       </div>

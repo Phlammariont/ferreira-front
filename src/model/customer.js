@@ -1,3 +1,5 @@
+import Model from '../components/crud/model'
+
 const customer = {
   name: 'Cliente',
   fields: [
@@ -6,4 +8,4 @@ const customer = {
   ]
 }
 
-export default customer
+export default new Model(customer)

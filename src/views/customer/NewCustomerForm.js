@@ -51,7 +51,7 @@ class NewCustomerForm extends Component{
             label="E-Mail"
             type="mail"
             fullWidth
-            onChange={this.handleChange('price')}
+            onChange={this.handleChange('email')}
           />
         </DialogContent>
         <DialogActions>

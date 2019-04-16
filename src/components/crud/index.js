@@ -3,7 +3,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
-import {map, mapObjIndexed, values} from 'ramda'
+import {map, reduce, values, evolve, isNil} from 'ramda'
 import Table from '@material-ui/core/Table'
 import AddIcon from '@material-ui/icons/Add'
 import Fab from '@material-ui/core/Fab'
@@ -14,7 +14,9 @@ import PropTypes from 'prop-types'
 
 class Crud extends Component {
   static propTypes = {
-    newModelForm: PropTypes.func.isRequired
+    newModelForm: PropTypes.func.isRequired,
+    model: PropTypes.object.isRequired,
+    collection: PropTypes.array.isRequired
   }
 
   constructor (props) {
@@ -38,13 +40,9 @@ class Crud extends Component {
     return (
       <div>
         <Table>
-          <TableHead>
-            <TableRow>
-              {map(TableCellHeader, this.props.model.fields)}
-            </TableRow>
-          </TableHead>
+          {renderTableHeader({fields: this.props.model.fields})}
           <TableBody>
-            {this.props.collection && map(Row, this.props.collection)}
+            {this.props.collection && map(Row(this.props.model.fields), this.props.collection)}
           </TableBody>
         </Table>
         <Fab
@@ -66,11 +64,37 @@ class Crud extends Component {
   }
 }
 
-const TableCellHeader = ({label}) => <TableCell key={label}>{label}</TableCell>
+const renderTableHeader = ({fields}) => (
+  <TableHead>
+    <TableRow>
+      {map(TableCellHeader, fields)}
+    </TableRow>
+  </TableHead>
+)
 
-const Row = item => <TableRow key={item.name + item.price}>{values(mapObjIndexed(Cell, item))}</TableRow>
+const TableCellHeader = ({label, isHide}) => isHide ? null : <TableCell key={label}>{label}</TableCell>
 
-const Cell = field => <TableCell key={field}>{field}</TableCell>
+const Row = fields => item => (
+  <TableRow key={item.id}>
+    {values(evolve(CellRenderReducer(fields), item))}
+  </TableRow>
+)
+
+const CellRenderReducer = reduce((Renders, field) => {
+  return {
+    ...Renders,
+    [field.name]: Cell(field)
+  }
+}, {})
+
+const Cell = field => value => {
+  if (field.isHide) return null
+  return (
+    <TableCell key={value.id || value}>
+      {isNil(field.instanceOf) ? value : field.instanceOf.toString(value)}
+    </TableCell>
+  )
+}
 
 const styles = {
   fab: {

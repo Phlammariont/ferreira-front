@@ -1,4 +1,6 @@
-const priceList = {
+import Model from '../components/crud/model'
+
+const product = {
   name: 'Precio',
   fields: [
     {name: 'name', label: 'Producto'},
@@ -7,4 +9,4 @@ const priceList = {
 }
 
 
-export default priceList
+export default new Model(product)

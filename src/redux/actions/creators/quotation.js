@@ -1,6 +1,6 @@
-import {product} from '../types'
+import {quotation} from '../types'
 
 export const setQuotationCollection = products => ({
-  type: product.SET_COLLECTION,
+  type: quotation.SET_COLLECTION,
   collection: products
 })
