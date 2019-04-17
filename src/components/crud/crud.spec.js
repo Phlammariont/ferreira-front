@@ -132,4 +132,3 @@ describe('In a suite of tests for the Quotation view', () => {
     expect(getByText(/precio 2 - [$]200/)).toBeVisible()
   })
 })
-
