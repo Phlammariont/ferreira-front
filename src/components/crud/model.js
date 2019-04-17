@@ -1,11 +1,10 @@
 class Model {
   constructor(model) {
-    this.fields = model.fields
-    this.name = model.name
+    this.model = model
   }
 
-  toString( model ){
-    return model.name
+  toString() {
+    return this.model.name
   }
 }
 

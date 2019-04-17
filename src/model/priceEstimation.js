@@ -1,13 +1,14 @@
 import Model from '../components/crud/model'
-import customer from './customer'
-import product from './product'
+import Customer from './customer'
+import Product from './product'
 
-const priceEstimation = {
-  name: 'Cotización',
-  fields: [
-    { name: 'customer', label: 'Cliente', instanceOf: customer },
-    { name: 'product', label: 'Productos', instanceOf: product }
+class PriceEstimation extends Model {
+  name = 'Cotización'
+  fields = [
+    { name: 'id', label: 'Id', isHide: true },
+    { name: 'customer', label: 'Cliente', instanceOf: Customer },
+    { name: 'products', label: 'Productos', instanceOf: [Product] }
   ]
 }
 
-export default new Model(priceEstimation)
+export default PriceEstimation

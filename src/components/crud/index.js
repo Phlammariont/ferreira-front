@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 class Crud extends Component {
   static propTypes = {
     newModelForm: PropTypes.func.isRequired,
-    model: PropTypes.object.isRequired,
+    model: PropTypes.func.isRequired,
     collection: PropTypes.array.isRequired
   }
 
@@ -37,12 +37,13 @@ class Crud extends Component {
 
   render () {
     const NewModelForm = this.props.newModelForm
+    const model = new this.props.model()
     return (
       <div>
         <Table>
-          {renderTableHeader({fields: this.props.model.fields})}
+          {renderTableHeader({fields: model.fields})}
           <TableBody>
-            {this.props.collection && map(Row(this.props.model.fields), this.props.collection)}
+            {this.props.collection && map(Row(model.fields), this.props.collection)}
           </TableBody>
         </Table>
         <Fab
@@ -56,7 +57,7 @@ class Crud extends Component {
           open={this.state.newModelFormOpen}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title" >
-          <DialogTitle>Agregar {this.props.model.name}</DialogTitle>
+          <DialogTitle>Agregar {model.name}</DialogTitle>
           <NewModelForm onClose={this.handleClose}/>
         </Dialog>
       </div>
@@ -87,11 +88,18 @@ const CellRenderReducer = reduce((Renders, field) => {
   }
 }, {})
 
+const renderModel = ({Model, value }) => {
+  if ( Model instanceof Array) {
+    return map(item => <span key={item.id}>{new Model[0](item).toString()}</span>, value)
+  }
+  return new Model(value).toString()
+}
+
 const Cell = field => value => {
   if (field.isHide) return null
   return (
     <TableCell key={value.id || value}>
-      {isNil(field.instanceOf) ? value : field.instanceOf.toString(value)}
+      {isNil(field.instanceOf) ? value : renderModel({ Model: field.instanceOf, value })}
     </TableCell>
   )
 }

@@ -21,7 +21,9 @@ describe('In a suite of tests for the Quotation view', () => {
 
   it('Should show a list of quotations', () => {
     const { getByText } = renderComponent({
-      quotation: {collection: [{ customer: {name:'leon'}, products: [{name: 'cama'}] }]}
+      quotation: {
+        collection: [{ id: '001', customer: { id: '002', name:'leon'}, products: [{id: '003', name: 'cama'}] }]
+      }
     })
     expect(getByText('leon')).toBeDefined()
     expect(getByText('cama')).toBeDefined()
