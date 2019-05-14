@@ -53,6 +53,14 @@ class NewCustomerForm extends Component{
             fullWidth
             onChange={this.handleChange('email')}
           />
+          <TextField
+            margin="dense"
+            id="legal-id"
+            label="Cedula"
+            type="text"
+            fullWidth
+            onChange={this.handleChange('legalId')}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={this.props.onClose} color="primary">

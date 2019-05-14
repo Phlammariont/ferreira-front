@@ -7,14 +7,21 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
 import { autocompleteFilter } from './filter'
+import PropTypes from 'prop-types'
 
 class Autocomplete extends Component{
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired,
+    itemField: PropTypes.string.isRequired
+  }
   render () {
     const {label, data, itemField} = this.props
     return (
       <Downshift
         onChange={this.props.onChange}
-        itemToString={propOr('', itemField)} >
+        itemToString={propOr('', itemField)}
+        selectedItem={this.props.selectedItem}>
           {renderComponents({ label, data, itemField })}
       </Downshift>
     )

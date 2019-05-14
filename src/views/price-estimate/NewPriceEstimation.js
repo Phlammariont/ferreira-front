@@ -8,6 +8,7 @@ import quotationService from '../../service/quotation'
 import Autocomplete from '../../components/autocomplete'
 import { getCustomerCollection } from '../../selectors/customer'
 import { getProductCollection } from '../../selectors/product'
+import Multiselect from '../../components/multiselect'
 
 class NewPriceEstimation extends Component{
   constructor (props) {
@@ -28,8 +29,9 @@ class NewPriceEstimation extends Component{
 
   saveEstimation = async () => {
     await quotationService.save(this.state.newEstimation)
+    this.props.onSave && this.props.onSave()
     this.setState({newEstimation: {}})
-    this.props.onClose()
+    this.props.onClose && this.props.onClose()
   }
 
   render () {
@@ -46,12 +48,12 @@ class NewPriceEstimation extends Component{
             fullWidth
             onChange={this.handleChange('customer')}
           />
-          <Autocomplete
+          <Multiselect
             data={this.props.products}
-            label='Product'
+            label='Products'
             itemField='name'
             fullWidth
-            onChange={this.handleChange('product')}
+            onChange={this.handleChange('products')}
           />
         </DialogContent>
         <DialogActions>

@@ -1,4 +1,4 @@
-import {propOr, filter, toLower} from 'ramda'
+import { propOr, filter, toLower } from 'ramda'
 
 const optionByValue = ({inputValue, itemField}) => item => !inputValue || toLower(propOr('', itemField, item)).includes(toLower(inputValue).toLowerCase())
 

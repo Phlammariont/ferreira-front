@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/core/SvgIcon/SvgIcon'
+import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import CrudTable from './table'
@@ -64,7 +64,7 @@ const NewModelButton = ({ className, onClick }) => (
     aria-label="Add"
     className={className}
     onClick={onClick} >
-    <AddIcon />
+    <AddIcon>add</AddIcon>
   </Fab>
 )
 

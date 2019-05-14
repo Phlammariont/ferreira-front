@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Autocomplete from '../../components/autocomplete'
+import Multiselect from '../../components/multiselect'
 
 class Index extends Component {
   render() {
@@ -8,6 +9,9 @@ class Index extends Component {
         <h1>hola mundo components</h1>
         <div>
           <Autocomplete label={'Mi Autocomplete'} data={[{name: 'leon'}, {name: 'Alejandra'}]} itemField={'name'}/>
+        </div>
+        <div>
+          <Multiselect label={'Mi Multiselect'} data={[{name: 'leon'}, {name: 'Alejandra'}]} itemField={'name'} onChange={options => alert(options)}/>
         </div>
       </div>
     )

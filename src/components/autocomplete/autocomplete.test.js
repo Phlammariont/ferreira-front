@@ -3,6 +3,8 @@ import {render, fireEvent, cleanup, waitForElement} from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import Autocomplete from './autocomplete'
 
+const LABEL = 'users'
+
 const createAutocomplete = ( props = {} ) => {
   return render(
     <Autocomplete {...props}/>,
@@ -13,20 +15,18 @@ describe('Suit tests for Autocomplete Component', () => {
   afterEach(cleanup)
 
   it('renders without crashing', () => {
-    const { container } = createAutocomplete()
+    const { container } = createAutocomplete({label: LABEL})
     expect(container).toBeDefined()
   })
 
   it('render an input', () => {
-    const LABEL = 'users'
     const { getByLabelText } = createAutocomplete({label: LABEL})
     const input = getByLabelText(LABEL)
     expect(input).toBeDefined()
   })
 
   it('render a list when 3 characters on the input', async () => {
-    const LABEL = 'users'
-    const { getByLabelText, getByText, container } = createAutocomplete({
+    const { getByLabelText, getByText } = createAutocomplete({
       data: [{name: 'leon'}],
       itemField: 'name',
       label: LABEL,
@@ -41,8 +41,7 @@ describe('Suit tests for Autocomplete Component', () => {
     expect(usernameElement).toBeVisible()
   })
   it('dont render a list when 3 characters on the input with no matches', async () => {
-    const LABEL = 'users'
-    const { getByLabelText, getByText, getByTestId } = createAutocomplete({
+    const { getByLabelText, getByTestId } = createAutocomplete({
       data: [{name: 'leon'}],
       itemField: 'name',
       label: LABEL,
@@ -58,7 +57,6 @@ describe('Suit tests for Autocomplete Component', () => {
 
   it('let the suer select an option', async () => {
     const onChange = jest.fn()
-    const LABEL = 'users'
     const { getByLabelText, getByText } = createAutocomplete({
       data: [{name: 'alejandra'}, {name: 'leon'}],
       itemField: 'name',
