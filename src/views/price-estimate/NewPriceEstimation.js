@@ -45,14 +45,14 @@ class NewPriceEstimation extends Component{
             data={this.props.customers}
             label='Customer'
             itemField='name'
-            fullWidth
+            fullWidth={true}
             onChange={this.handleChange('customer')}
           />
           <Multiselect
             data={this.props.products}
             label='Products'
             itemField='name'
-            fullWidth
+            fullWidth={true}
             onChange={this.handleChange('products')}
           />
         </DialogContent>

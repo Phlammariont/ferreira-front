@@ -49,6 +49,8 @@ class NewModel extends Component {
         <Dialog
           open={this.state.newModelFormOpen}
           onClose={this.handleClose}
+          maxWidth='md'
+          fullWidth={true}
           aria-labelledby="form-dialog-title" >
           <DialogTitle>Agregar {this.state.model.name}</DialogTitle>
           <NewModelForm onClose={this.handleClose}/>
