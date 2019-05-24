@@ -30,7 +30,7 @@ const NavBar = props => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {getName(props.location)}
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">Cerrar la sesión</Button>
         </Toolbar>
       </AppBar>
     </header>
