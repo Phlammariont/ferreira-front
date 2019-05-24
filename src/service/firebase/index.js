@@ -2,9 +2,9 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 const config = {
-  apiKey: "AIzaSyDUV0wxU2lY4VIFE247LsxfvWgQhSmcK-4",
-  authDomain: "ferreira-front.firebaseapp.com",
-  projectId: "ferreira-front"
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID
 };
 
 firebase.initializeApp(config)
