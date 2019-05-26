@@ -20,6 +20,7 @@ const Login = ({classes, onAuthenticate}) => {
       </div>
       <div className={classes.logInForm}>
         <form action="/log-in">
+          <Button variant="contained" className={classes.button} onClick={() => {window.location = 'https://www.zoho.com/mail/login.html'}} fullWidth>Correo Electronico</Button>
           <TextField autoComplete='email' label='Usuario' onChange={evt => setUser(evt.target.value)} fullWidth/>
           <TextField autoComplete='current-password' label='Contraseña' type={'password'} onChange={evt => setPassword(evt.target.value)} fullWidth/>
           <Button variant="contained" className={classes.button} onClick={authenticate} fullWidth>Entrar</Button>
