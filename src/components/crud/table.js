@@ -38,7 +38,7 @@ const Row = fields => item => (
 const CellRenderReducer = reduce((Renders, field) => {
   return {
     ...Renders,
-    [field.name]: Cell(field)
+    [field.name]: Cell(field),
   }
 }, {})
 
