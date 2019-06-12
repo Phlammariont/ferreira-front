@@ -7,6 +7,8 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import {withRouter} from 'react-router-dom'
+import {getEmail} from '../../selectors/user'
+import authService from '../../service/firebase/auth-service'
 
 const styles = ({
   root: {
@@ -19,6 +21,10 @@ const styles = ({
 })
 
 const NavBar = props => {
+  const logOut = async () => {
+    await authService.logOut()
+    window.location = "http://www.ferreira.com.co";
+  }
   const { classes } = props
   return (
     <header  className={classes.root}>
@@ -30,7 +36,8 @@ const NavBar = props => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {getName(props.location)}
           </Typography>
-          <Button color="inherit">Cerrar la sesión</Button>
+          <Button color="inherit">{getEmail(props.user)}</Button>
+          <Button color="inherit" onClick={logOut}>Cerrar la sesión</Button>
         </Toolbar>
       </AppBar>
     </header>

@@ -16,7 +16,7 @@ class CustomerView extends Component {
   }
 
   componentDidMount () {
-    customerService.onAdd(this.props.setCustomerCollection)
+    this.props.fetchCustomers()
   }
 
   render () {

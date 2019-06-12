@@ -12,33 +12,38 @@ const config = {
 firebase.initializeApp(config)
 const db = firebase.firestore()
 
-const resolveSnapshot = snapshot => {
+const resolveSnapshot = (snapshot, skipAudit) => {
   let docs = []
-  snapshot.forEach(doc => docs = [...docs, {uid: doc.id, ...authService.removeAudit(doc.data())}])
-  return docs
+  snapshot.forEach(doc => docs = [...docs, {uid: doc.id, ...doc.data()}])
+  return  skipAudit ? docs : authService.auditCollection(docs)
 }
 
-const getModel = async (collection) => {
+const getCollection = async (collection, skipAudit) => {
   const modelSnapshot = await db.collection(collection).get()
-  return resolveSnapshot(modelSnapshot)
+  return resolveSnapshot(modelSnapshot, skipAudit)
 }
 
 const saveModel = async ({model, collection}) => {
-  const audit = await authService.getAudit()
-  db.collection(collection).add({...model, ...audit })
+  return await db.collection(collection).add({...model, ...authService.getAudit() })
 }
 
 const addCallback = (collection, b, callback) => {
   return db.collection(collection).onSnapshot(pipe(resolveSnapshot, callback))
 }
 
-const updateModel = async({uid, changes, collection}) => {
-  db.collection(collection).doc(uid).set(changes, { merge: true })
+const updateModel = async ({uid, changes, collection}) => {
+  return await db.collection(collection).doc(uid).set(changes, { merge: true })
+}
+
+const query = async (collection, field, operator, value) => {
+  return await db.collection(collection).where(field, operator, value).get()
 }
 
 export default {
   saveModel,
-  getModel,
+  getCollection,
   addCallback,
-  updateModel
+  updateModel,
+  query,
+  resolveSnapshot,
 }
