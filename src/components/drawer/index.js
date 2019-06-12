@@ -51,6 +51,14 @@ class AppDrawer extends Component{
             <ListItemIcon><MailIcon/></ListItemIcon>
             <Link to="/customer">Clientes</Link>
           </ListItem>
+          <ListItem button onClick={this.props.closeDrawer}>
+            <ListItemIcon><MailIcon/></ListItemIcon>
+            <Link to="/purchase">Negocios</Link>
+          </ListItem>
+          <ListItem button onClick={this.props.closeDrawer}>
+            <ListItemIcon><MailIcon/></ListItemIcon>
+            <Link to="/credits">Cartera</Link>
+          </ListItem>
         </List>
       </Drawer>
     )
