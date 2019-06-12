@@ -6,9 +6,9 @@ class InventoryItem extends Model {
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     { name: 'product', label: 'Productos', instanceOf: Product },
-    { name: 'value', label: 'Valor'},
-    { name: 'fabric', label: 'Tela'},
-    { name: 'color', label: 'Color'},
+    { name: 'value', label: 'Valor' },
+    { name: 'fabric', label: 'Tela' },
+    { name: 'color', label: 'Color' },
   ]
 }
 
