@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { Provider } from 'react-redux'
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import store from '../redux'
@@ -12,7 +12,7 @@ import ComponentIndex from '../views/components'
 
 export const appStore  = store({})
 
-class App extends Component {
+class App extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
@@ -27,7 +27,7 @@ class App extends Component {
       <Provider store={appStore}>
         <BrowserRouter>
           <div className="App">
-            <NavBar openDrawer={this.toggleDrawer(true)}/>
+            <NavBar openDrawer={this.toggleDrawer(true)} user={this.props.user} />
             <Drawer open={this.state.drawerOpen} closeDrawer={this.toggleDrawer(false)}/>
             <Routes />
           </div>

@@ -6,7 +6,7 @@ import quotation from './quotation'
 const rootReducer  = combineReducers({
   customer,
   product,
-  quotation
+  quotation,
 })
 
 export default rootReducer

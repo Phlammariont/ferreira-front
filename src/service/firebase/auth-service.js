@@ -1,22 +1,28 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import {find, identity, memoizeWith, omit, pick, pipe, prop, propEq, propOr} from 'ramda'
+import {filter, isNil, map, omit, pathEq, pick, pipe, prop, propOr} from 'ramda'
 import firebaseService from './index'
 
 const getUId = prop('uid')
+const getLocationId = prop('locationId')
 const removeAudit = omit(['audit'])
 const getChangePasswordRequired = propOr(true, 'changePasswordRequired')
-const findByUid = userUId => find(propEq('authId', userUId))
 
+const AuthState = {
+  userInfo: {}
+}
 
-const getUserInfo = memoizeWith(identity, async (user) => {
-  const users = await firebaseService.getModel('users')
-  return findByUid(getUId(user))(users)
-})
+const setUserInfo = info => AuthState.userInfo = info
 
-const getAudit = async () => {
+const fetchUserInfo = async user => {
+  if ( isNil(user) ) return [{}]
+  const snapshot = await firebaseService.query('users', "authId", "==", getUId(user))
+  return firebaseService.resolveSnapshot(snapshot, true)
+}
+
+const getAudit = () => {
   const user = firebase.auth().currentUser;
-  const userInfo = await getUserInfo(user)
+  const userInfo = AuthState.userInfo
   return {
     audit: {
       user: user.uid,
@@ -25,8 +31,8 @@ const getAudit = async () => {
   }
 }
 
-const aggregateUser = async user => {
-  const userInfo = await getUserInfo(user)
+const aggregateUser = user => {
+  const userInfo = AuthState.userInfo
   return aggregateUserInfo(userInfo, user)
 }
 
@@ -38,32 +44,55 @@ const aggregateUserInfo = (userInfo, user) =>{
   }
 }
 
-const authenticate = ({onAuthenticate, user, password}) => {
-  firebase.auth().onAuthStateChanged(pipe(aggregateUser, onAuthenticate))
-  firebase.auth().signInWithEmailAndPassword(user, password)
+const authenticate = ({user, password}) => {
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+      firebase.auth().signInWithEmailAndPassword(user, password)
+    })
 }
 
-const passwordReset = async user => {
-  const userInfo = await getUserInfo(user)
+const init = ({onAuthenticate}) => {
+  firebase.auth().onAuthStateChanged(async user => {
+    if ( isNil(user) ) return
+    const [userInfo] = await fetchUserInfo(user)
+    setUserInfo(userInfo)
+    const aggregatedUser = aggregateUser(user)
+    return onAuthenticate(aggregatedUser)
+  })
+}
+
+const passwordReset = async () => {
   await firebaseService.updateModel({
-    uid: userInfo.uid,
+    uid: AuthState.userInfo.uid,
     changes: { changePasswordRequired: false },
     collection: 'users'
   })
-  return userInfo
+  return AuthState.userInfo
 }
 
 const resetPassword = async newPassword => {
   const user = firebase.auth().currentUser;
   await user.updatePassword(newPassword)
   const userInfo = await passwordReset(user)
-  return await aggregateUserInfo(userInfo, user)
+  return aggregateUserInfo(userInfo, user)
+}
+
+const auditFilter = userInfo => pathEq(['audit', 'locationId'], getLocationId(userInfo))
+
+export const auditCollection = docs => pipe(
+  filter(auditFilter(AuthState.userInfo)),
+  map(removeAudit)
+)(docs)
+
+const logOut = () => {
+  firebase.auth().signOut()
 }
 
 export default {
-  getAudit,
-  removeAudit,
+  auditCollection,
   authenticate,
-  getUserInfo,
-  resetPassword
+  getAudit,
+  init,
+  logOut,
+  resetPassword,
 }

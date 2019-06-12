@@ -5,14 +5,13 @@ import ChangePassword from './ChangePassword'
 
 const needPasswordChange = propEq('changePasswordRequired', true)
 
-const LoginFlow = ({onAuthenticate}) => {
+const LoginFlow = () => {
   const [changePassword, setChangePassword] = useState(false)
   const checkUserConditions = async user => {
     if(needPasswordChange(await user)) return setChangePassword( true )
-    onAuthenticate(user)
   }
 
-  if (changePassword) return <ChangePassword onChange={onAuthenticate}/>
+  if (changePassword) return <ChangePassword />
   return <Login onAuthenticate={checkUserConditions}/>
 }
 

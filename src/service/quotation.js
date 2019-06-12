@@ -6,7 +6,7 @@ const save = (quotation) => {
 }
 
 const get = async () => {
-  return await firebaseService.getModel('quotation')
+  return await firebaseService.getCollection('quotation')
 }
 
 const onAdd = (callback) => {
