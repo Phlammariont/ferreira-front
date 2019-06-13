@@ -1,30 +1,29 @@
 import React, {useEffect} from 'react'
-import Purchase from '../../model/purchase'
-import Crud from '../../components/crud'
-import {fetchCustomers} from '../../redux/actions/creators/customer'
 import {connect} from 'react-redux'
-import {getPurchaseCollection} from '../../selectors/purchase'
+import InventoryItem from '../../model/inventory-item'
+import Crud from '../../components/crud'
 import {fetchProducts} from '../../redux/actions/creators/product'
+import {getInventoryCollection} from '../../selectors/inventoryItem'
+import {saveInventory} from '../../redux/actions/creators/inventory'
 
 const PurchaseView = props => {
   useEffect(() => {
-    props.fetchCustomers()
     props.fetchProducts()
   })
   return (
     <main>
-      <Crud model={Purchase} collection={props.purchases}/>
+      <Crud model={InventoryItem} collection={props.inventoryItems} onSave={props.saveInventory}/>
     </main>
   )
 }
 
 const  mapStateToProps = state => ({
-  purchases: getPurchaseCollection(state)
+  inventoryItems: getInventoryCollection(state)
 })
 
 const mapActions = {
-  fetchCustomers,
   fetchProducts,
+  saveInventory,
 }
 
 export default connect(mapStateToProps, mapActions)(PurchaseView)

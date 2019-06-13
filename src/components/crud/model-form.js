@@ -1,5 +1,5 @@
-import React, {Fragment, useState} from 'react'
-import { map } from 'ramda'
+import React, {Fragment, useEffect, useState} from 'react'
+import {isNil, map, propEq} from 'ramda'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import TextField from '@material-ui/core/TextField'
@@ -10,19 +10,15 @@ import Autocomplete from '../autocomplete'
 import {connect} from 'react-redux'
 import {getCollection} from '../../selectors/utils'
 
-const renderFields = ({fields, model, handleChange}) => {
-  const handleFieldChange = name => value => handleChange({ ...model, [name]: value})
-  return map( field => {
-    return <ModelField field={field} handleChange={handleFieldChange(field.name)} key={field.name}/>
-  }, fields)
-}
+const isHide = propEq('isHide', true)
 
-const  ModelForm = ({ model, onClose }) => {
+const  ModelForm = ({ model, onClose, onSave }) => {
   const [newModel, setNewModel] = useState({})
   const modelInstance = new model()
-  
-  const save = () => {
-    console.log('saving my model', newModel)
+
+  const save = async () => {
+    await onSave(newModel)
+    onClose()
   }
   return (
     <Fragment>
@@ -30,7 +26,7 @@ const  ModelForm = ({ model, onClose }) => {
           <DialogContentText>
               Datos del {modelInstance.label}.
           </DialogContentText>
-          {renderFields({ fields: modelInstance.fields, model: modelInstance, handleChange: setNewModel })}
+          {renderFields({ fields: modelInstance.fields, model: newModel, handleChange: setNewModel })}
       </DialogContent>
       <DialogActions>
           <Button onClick={onClose} color="primary">
@@ -44,26 +40,53 @@ const  ModelForm = ({ model, onClose }) => {
   )
 }
 
-const ModelField = ({field, handleChange}) => {
-  const Field = field.instanceOf ? getModelComponent(field) : TextField
+const renderFields = ({fields, model, handleChange}) => {
+  const handleFieldChange = name => value => handleChange({ ...model, [name]: value})
+  return map( field => {
+    if (isHide(field)) return null
+    return <ModelField field={field} value={model[field.name]} handleChange={handleFieldChange(field.name)} key={field.name}/>
+  }, fields)
+}
+
+const ModelField = ({field, handleChange, value}) => {
+  if (isNil(field.instanceOf)) return (
+    <div>
+      <TextField
+        autoFocus
+        margin="dense"
+        id={field.name}
+        label={field.label}
+        type="text"
+        fullWidth
+        onChange={evt => handleChange(evt.target.value)}
+      />
+    </div>
+  )
+  const Field = getModelComponent(field, value)
   return (
-    <Field
-      autoFocus
-      margin="dense"
-      id={field.name}
-      label={field.label}
-      type="text"
-      fullWidth
-      onChange={handleChange}
-    />
+    <div>
+      <Field
+        id={field.name}
+        label={field.label}
+        onChange={handleChange}
+      />
+    </div>
   )
 }
 
-const getModelComponent = ({ instanceOf:Model }) => {
+const getModelComponent = ({ instanceOf:Model }, value) => {
   if ( Model instanceof Array) {
-    return connect(state => ({ data: getCollection(new Model[0]().name)(state) }))(Multiselect)
+    return connect(state => ({
+      data: getCollection(new Model[0]().name)(state),
+      itemField: 'name',
+      selection: value
+    }))(Multiselect)
   }
-  return connect(state => ({ data: getCollection(new Model().name)(state) }))(Autocomplete)
+  return connect(state => ({
+    data: getCollection(new Model().name)(state),
+    itemField: 'name',
+    selectedItem: value
+  }))(Autocomplete)
 }
 
 export default ModelForm

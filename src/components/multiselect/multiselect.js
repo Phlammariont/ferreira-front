@@ -6,7 +6,7 @@ class Multiselect extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selection: [],
+      selection: props.selection || [],
       options: this.props.data
     }
   }

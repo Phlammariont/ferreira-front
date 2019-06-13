@@ -1,4 +1,4 @@
-import {path} from 'ramda'
+import { pathOr } from 'ramda'
 
 
-export const getCollection = name => path([name, 'collection'])
+export const getCollection = name => pathOr([], [name, 'collection'])

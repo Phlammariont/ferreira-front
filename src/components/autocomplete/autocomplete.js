@@ -13,7 +13,7 @@ class Autocomplete extends Component{
   static propTypes = {
     label: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
-    itemField: PropTypes.string.isRequired
+    itemField: PropTypes.string.isRequired,
   }
   render () {
     const {label, data, itemField} = this.props

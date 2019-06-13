@@ -54,7 +54,10 @@ class NewModel extends Component {
           fullWidth={true}
           aria-labelledby="form-dialog-title" >
           <DialogTitle>Agregar {this.state.model.label}</DialogTitle>
-          <NewModelForm onClose={this.handleClose} model={this.props.model}/>
+          <NewModelForm
+            onClose={this.handleClose}
+            model={this.props.model}
+            onSave={this.props.onSave} />
         </Dialog>
       </React.Fragment>
     )

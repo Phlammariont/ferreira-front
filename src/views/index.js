@@ -11,6 +11,7 @@ import Customer from '../views/customer'
 import ComponentIndex from '../views/components'
 import Purchase from './purchase'
 import Credits from './credits'
+import Inventory from './inventory'
 
 
 export const appStore  = store({})
@@ -48,6 +49,7 @@ const Routes = () => (
     <Route path="/customer" component={Customer} />
     <Route path="/purchase" component={Purchase} />
     <Route path="/credits" component={Credits} />
+    <Route path="/inventory" component={Inventory} />
     <Route path="/super-component-index" component={ComponentIndex} />
   </Switch>
 )

@@ -11,3 +11,4 @@ export const error = {
 export const customer = getCrudActions('customer')
 export const product = getCrudActions('product')
 export const quotation = getCrudActions('quotation')
+export const inventory = getCrudActions('inventory')
