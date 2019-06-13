@@ -1,7 +1,8 @@
 import Model from '../components/crud/model'
 
 class PaymentFee extends Model {
-  name = 'Cuota'
+  name = 'paymentfee'
+  label = 'Cuota'
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     { name: 'value', label: 'Valor' },

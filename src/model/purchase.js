@@ -3,7 +3,8 @@ import Customer from './customer'
 import InventoryItem from './inventory-item'
 
 class Purchase extends Model {
-  name = 'Negocio'
+  name = 'purchase'
+  label = 'Negocio'
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     { name: 'customer', label: 'Cliente', instanceOf: Customer },

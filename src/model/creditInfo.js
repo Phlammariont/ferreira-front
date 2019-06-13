@@ -4,7 +4,8 @@ import PaymentFee from './paymentFee'
 import Purchase from './purchase'
 
 class CreditInfo extends Model {
-  name = 'Cartera'
+  name = 'credit'
+  Label = 'Cartera'
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     { name: 'customer', label: 'Cliente', instanceOf: Customer },

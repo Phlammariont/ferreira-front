@@ -3,7 +3,8 @@ import Customer from './customer'
 import Product from './product'
 
 class PriceEstimation extends Model {
-  name = 'Cotización'
+  name = 'quotation'
+  label = 'Cotización'
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     { name: 'customer', label: 'Cliente', instanceOf: Customer },

@@ -1,12 +1,13 @@
 import React from 'react';
-import {cleanup, render} from 'react-testing-library'
+import { cleanup, render, fireEvent, waitForElement } from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import Crud from './index';
 import ModelForm from './model-form'
 import Model from './model'
 
 class ProductModel extends Model {
-  name = 'Producst'
+  name = 'product'
+  label = 'Product'
   fields = [
     { name: 'id', label: 'id', isHide: true },
     { name: 'name', label: 'Nombre' }
@@ -14,7 +15,8 @@ class ProductModel extends Model {
 }
 
 class PriceModel extends Model {
-  name = 'Price'
+  name = 'price'
+  label = 'Precio'
   fields = [
     { name: 'id', label: 'id', isHide: true },
     { name: 'name', label: 'Nombre' },
@@ -37,13 +39,15 @@ class GeneralModel extends Model {
   ]
 }
 
+const pricesCollection = [ { id: 'first', name: 'precio 1', price: 100 }, { id: 'second', name: 'precio 2', price: 200 } ]
+
 const generalCollection = [
   {
     id: '1234-5678',
     name: 'general 1',
     email: 'general@ferreira.com',
     product: { id: 1, name: 'general product' },
-    prices: [ { id: 'first', name: 'precio 1', price: 100 }, { id: 'second', name: 'precio 2', price: 200 } ]
+    prices: pricesCollection
   }
 ]
 
@@ -130,5 +134,27 @@ describe('In a suite of tests for the Quotation view', () => {
     }).toThrow()
     expect(getByText(/precio 1 - /)).toBeDefined()
     expect(getByText(/precio 2 - [$]200/)).toBeVisible()
+  })
+
+  it('Should show item with their toString method', () => {
+    const { getByText, getByTestId } = renderComponent({
+      model: PriceModel,
+      collection: pricesCollection
+    })
+
+    expect(getByText(/precio 1/)).toBeDefined()
+    expect(getByTestId('new-model-fab')).toBeDefined()
+  })
+
+  it('Should show item with their toString method', async () => {
+    const { getByText, getByTestId } = renderComponent({
+      model: PriceModel,
+      collection: pricesCollection
+    })
+    const newModelBtn = getByTestId('new-model-fab')
+    fireEvent.click(newModelBtn)
+    const title = await waitForElement(
+      () => getByText(/Datos del/),
+    )
   })
 })
