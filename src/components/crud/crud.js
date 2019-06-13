@@ -4,6 +4,7 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import NemModel from './model-form'
 import CrudTable from './table'
 
 class Crud extends Component {
@@ -42,7 +43,7 @@ class NewModel extends Component {
   )
 
   render () {
-    const NewModelForm = this.props.newModelForm
+    const NewModelForm = this.props.newModelForm || NemModel
     return (
       <React.Fragment>
         <NewModelButton className={this.props.classes.fab} onClick={this.openNewModel}/>
@@ -52,8 +53,11 @@ class NewModel extends Component {
           maxWidth='md'
           fullWidth={true}
           aria-labelledby="form-dialog-title" >
-          <DialogTitle>Agregar {this.state.model.name}</DialogTitle>
-          <NewModelForm onClose={this.handleClose}/>
+          <DialogTitle>Agregar {this.state.model.label}</DialogTitle>
+          <NewModelForm
+            onClose={this.handleClose}
+            model={this.props.model}
+            onSave={this.props.onSave} />
         </Dialog>
       </React.Fragment>
     )
@@ -62,6 +66,7 @@ class NewModel extends Component {
 
 const NewModelButton = ({ className, onClick }) => (
   <Fab
+    data-testid="new-model-fab"
     color="primary"
     aria-label="Add"
     className={className}

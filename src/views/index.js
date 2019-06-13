@@ -2,13 +2,17 @@ import React, {PureComponent} from 'react'
 import { Provider } from 'react-redux'
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import store from '../redux'
-import '../App.css';
+import '../App.css'
 import NavBar from '../components/nav-bar'
 import Drawer from '../components/drawer'
 import PriceList from '../views/price-list'
 import PriceEstimate from '../views/price-estimate'
 import Customer from '../views/customer'
 import ComponentIndex from '../views/components'
+import Purchase from './purchase'
+import Credits from './credits'
+import Inventory from './inventory'
+
 
 export const appStore  = store({})
 
@@ -33,7 +37,7 @@ class App extends PureComponent {
           </div>
         </BrowserRouter>
       </Provider>
-    );
+    )
   }
 }
 
@@ -43,6 +47,9 @@ const Routes = () => (
     <Route path="/price-list" component={PriceList} />
     <Route path="/price-estimate" component={PriceEstimate} />
     <Route path="/customer" component={Customer} />
+    <Route path="/purchase" component={Purchase} />
+    <Route path="/credits" component={Credits} />
+    <Route path="/inventory" component={Inventory} />
     <Route path="/super-component-index" component={ComponentIndex} />
   </Switch>
 )

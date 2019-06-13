@@ -1,7 +1,8 @@
 import Model from '../components/crud/model'
 
 class Product extends Model {
-  name = 'Precio'
+  name = 'product'
+  label = 'Precio'
   fields = [
     { name: 'uid', label: 'Id', isHide: true },
     {name: 'name', label: 'Producto'},

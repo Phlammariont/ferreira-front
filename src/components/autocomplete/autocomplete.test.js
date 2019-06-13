@@ -55,7 +55,7 @@ describe('Suit tests for Autocomplete Component', () => {
     expect(list).toContainHTML('')
   })
 
-  it('let the suer select an option', async () => {
+  it('let the user select an option', async () => {
     const onChange = jest.fn()
     const { getByLabelText, getByText } = createAutocomplete({
       data: [{name: 'alejandra'}, {name: 'leon'}],
@@ -72,5 +72,19 @@ describe('Suit tests for Autocomplete Component', () => {
     fireEvent.click(option)
     expect(onChange).toHaveBeenCalled()
     expect(onChange.mock.calls[0][0]).toEqual({name: 'leon'})
+  })
+
+  it('hould pre render an option', async () => {
+    const onChange = jest.fn()
+    const data = [{name: 'alejandra'}, {name: 'leon'}]
+    const { getByLabelText, getByText } = createAutocomplete({
+      data: data,
+      itemField: 'name',
+      label: LABEL,
+      onChange,
+      selectedItem: data[0]
+    })
+    const input = getByLabelText(LABEL)
+    expect(input.value).toBe('alejandra')
   })
 })

@@ -25,4 +25,11 @@ describe('In a suit test for CustomerView Component', () => {
     expect(getByText('leon')).toBeDefined()
     expect(getByText('leon@ferreira.com')).toBeDefined()
   })
+
+  it('render a new model button', () => {
+    const { getByText, getByTestId } = createView({
+      initialState: { customer: { collection: [ { id: '001', name: 'leon', email: 'leon@ferreira.com'} ] } }
+    })
+    expect(getByTestId('new-model-fab')).toBeDefined()
+  })
 })

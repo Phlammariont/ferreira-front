@@ -56,10 +56,42 @@ class NewCustomerForm extends Component{
           <TextField
             margin="dense"
             id="legal-id"
-            label="Cedula"
+            label="Cédula"
             type="text"
             fullWidth
             onChange={this.handleChange('legalId')}
+          />
+          <TextField
+            margin="dense"
+            id="city"
+            label="Ciudad"
+            type="text"
+            fullWidth
+            onChange={this.handleChange('city')}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="Dirección"
+            type="text"
+            fullWidth
+            onChange={this.handleChange('address')}
+          />
+          <TextField
+            margin="dense"
+            id="neighborhood"
+            label="Barrio"
+            type="text"
+            fullWidth
+            onChange={this.handleChange('neighborhood')}
+          />
+          <TextField
+            margin="dense"
+            id="phone"
+            label="Teléfono"
+            type="text"
+            fullWidth
+            onChange={this.handleChange('phone')}
           />
         </DialogContent>
         <DialogActions>
