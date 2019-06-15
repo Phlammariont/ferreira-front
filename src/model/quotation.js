@@ -2,7 +2,7 @@ import Model from '../components/crud/model'
 import Customer from './customer'
 import Product from './product'
 
-class PriceEstimation extends Model {
+class Quotation extends Model {
   name = 'quotation'
   label = 'Cotización'
   fields = [
@@ -12,4 +12,4 @@ class PriceEstimation extends Model {
   ]
 }
 
-export default PriceEstimation
+export default Quotation

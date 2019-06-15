@@ -1,7 +1,7 @@
 import { pipe } from 'ramda'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import authService from './auth-service'
+import authService, {removeAudit} from './auth-service'
 
 const config = {
   apiKey: process.env.REACT_APP_FB_API_KEY,
@@ -24,7 +24,9 @@ const getCollection = async (collection, skipAudit) => {
 }
 
 const saveModel = async ({model, collection}) => {
-  return await db.collection(collection).add({...model, ...authService.getAudit() })
+  const docRef = await db.collection(collection).add({...model, ...authService.getAudit() })
+  const doc = await docRef.get()
+  return removeAudit(doc.data())
 }
 
 const addCallback = (collection, b, callback) => {

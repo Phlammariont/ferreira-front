@@ -5,7 +5,7 @@ import firebaseService from './index'
 
 const getUId = prop('uid')
 const getLocationId = prop('locationId')
-const removeAudit = omit(['audit'])
+export const removeAudit = omit(['audit'])
 const getChangePasswordRequired = propOr(true, 'changePasswordRequired')
 
 const AuthState = {

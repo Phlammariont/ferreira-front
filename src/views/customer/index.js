@@ -29,7 +29,6 @@ class CustomerView extends Component {
 
 const mapActions = {
   fetchCustomers,
-  setCustomerCollection
 }
 
 const stateToProps = state => ({
