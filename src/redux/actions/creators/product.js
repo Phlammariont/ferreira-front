@@ -1,10 +1,4 @@
 import {product} from '../types'
+import {fetchCollection} from './general-model'
 
-export const fetchProducts = () => ({
-  type: product.FETCH_COLLECTION
-})
-
-export const setProductCollection = products => ({
-  type: product.SET_COLLECTION,
-  collection: products
-})
+export const fetchProducts = fetchCollection(product)

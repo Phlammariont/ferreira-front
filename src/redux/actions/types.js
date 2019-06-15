@@ -1,14 +1,20 @@
+import InventoryItem from '../../model/inventory-item'
+import Customer from '../../model/customer'
+import Product from '../../model/product'
+import Quotation from '../../model/quotation'
+
 const getCrudActions =( model ) => ({
   SET_COLLECTION: `${model.toUpperCase()}.SET_COLLECTION`,
   FETCH_COLLECTION: `${model.toUpperCase()}.FETCH_COLLECTION`,
-  ADD_TO_COLLECTION: `${model.toUpperCase()}.ADD_TO_COLLECTION`
+  ADD_TO_COLLECTION: `${model.toUpperCase()}.ADD_TO_COLLECTION`,
+  ADD_TO_COLLECTION_SUCCESS: `${model.toUpperCase()}.ADD_TO_COLLECTION_SUCCESS`,
 })
 
 export const error = {
   EXTERNAL: 'ERROR.EXTERNAL'
 }
 
-export const customer = getCrudActions('customer')
-export const product = getCrudActions('product')
-export const quotation = getCrudActions('quotation')
-export const inventory = getCrudActions('inventory')
+export const customer = getCrudActions(new Customer().name)
+export const product = getCrudActions(new Product().name)
+export const quotation = getCrudActions(new Quotation().name)
+export const inventoryItem = getCrudActions(new InventoryItem().name)

@@ -1,20 +1,24 @@
-import React, {useEffect} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import InventoryItem from '../../model/inventory-item'
 import Crud from '../../components/crud'
 import {fetchProducts} from '../../redux/actions/creators/product'
 import {getInventoryCollection} from '../../selectors/inventoryItem'
-import {saveInventory} from '../../redux/actions/creators/inventory'
+import {fetchInventory, saveInventory} from '../../redux/actions/creators/inventory-item'
 
-const PurchaseView = props => {
-  useEffect(() => {
-    props.fetchProducts()
-  })
-  return (
-    <main>
-      <Crud model={InventoryItem} collection={props.inventoryItems} onSave={props.saveInventory}/>
-    </main>
-  )
+class PurchaseView extends Component {
+  componentDidMount () {
+    this.props.fetchProducts()
+    this.props.fetchInventory()
+  }
+  render() {
+    const {inventoryItems, saveInventory} = this.props
+    return (
+      <main>
+        <Crud model={InventoryItem} collection={inventoryItems} onSave={saveInventory}/>
+      </main>
+    )
+  }
 }
 
 const  mapStateToProps = state => ({
@@ -23,6 +27,7 @@ const  mapStateToProps = state => ({
 
 const mapActions = {
   fetchProducts,
+  fetchInventory,
   saveInventory,
 }
 

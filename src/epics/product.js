@@ -1,19 +1,5 @@
-import { from } from 'rxjs';
-import {  combineEpics, ofType } from 'redux-observable'
-import { mergeMap, map, catchError } from 'rxjs/operators'
-import { setProductCollection } from '../redux/actions/creators/product'
-import { createExternalError } from '../redux/actions/creators/errors'
-import { product } from '../redux/actions/types'
-import priceService from '../service/price-service'
+import {product} from '../redux/actions/types'
+import genericEpicCreator from './general-model'
+import Product from '../model/product'
 
-export const productEpic = action$ => action$.pipe(
-  ofType(product.FETCH_COLLECTION),
-  mergeMap(  () => {
-    return from(priceService.get()).pipe(
-      catchError(createExternalError),
-      map(setProductCollection)
-    )
-  })
-)
-
-export default combineEpics(productEpic)
+export default genericEpicCreator({model: Product, types: product})

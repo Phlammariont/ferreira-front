@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Crud from '../../components/crud'
-import PriceEstimation from '../../model/priceEstimation'
+import Quotation from '../../model/quotation'
 import NewPriceEstimation from './NewPriceEstimation'
 import { fetchCustomers } from '../../redux/actions/creators/customer'
 import { fetchProducts } from '../../redux/actions/creators/product'
@@ -21,7 +21,7 @@ class PriceEstimationView extends Component {
     return (
       <main>
         <Crud
-          model={PriceEstimation}
+          model={Quotation}
           newModelForm={NewPriceEstimation}
           collection={this.props.quotations}/>
       </main>

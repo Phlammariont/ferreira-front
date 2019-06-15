@@ -1,20 +1,11 @@
-import { getType } from '../../utils/ramda'
 import { quotation } from '../actions/types'
+import generalModelReducer from './general-model'
 const defaultState = {
   collection: []
 }
 
-
 const quotationReducer = (state = defaultState, action) => {
-  switch (getType(action)) {
-    case quotation.SET_COLLECTION:
-      return {
-        ...state,
-        collection: action.collection
-      }
-    default:
-      return state
-  }
+  return generalModelReducer(quotation, state, action)
 }
 
 export default quotationReducer
