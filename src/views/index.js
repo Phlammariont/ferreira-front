@@ -12,6 +12,7 @@ import ComponentIndex from '../views/components'
 import Purchase from './purchase'
 import Credits from './credits'
 import Inventory from './inventory'
+import NewCreditForm from './credits/NewCreditForm';
 
 
 export const appStore  = store({})
@@ -48,7 +49,8 @@ const Routes = () => (
     <Route path="/price-estimate" component={PriceEstimate} />
     <Route path="/customer" component={Customer} />
     <Route path="/purchase" component={Purchase} />
-    <Route path="/credits" component={Credits} />
+    <Route exact path="/credits" component={Credits} />
+    <Route exact path="/credits/new" component={NewCreditForm} />
     <Route path="/inventory" component={Inventory} />
     <Route path="/super-component-index" component={ComponentIndex} />
   </Switch>
