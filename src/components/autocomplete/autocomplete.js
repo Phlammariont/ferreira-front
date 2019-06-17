@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import Downshift from 'downshift'
 import TextField from '@material-ui/core/TextField'
-import { propOr } from 'ramda'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
-import { autocompleteFilter } from './filter'
+import {autocompleteFilter, getItemToStringFn} from './filter'
 import PropTypes from 'prop-types'
 
 class Autocomplete extends Component{
@@ -20,7 +19,7 @@ class Autocomplete extends Component{
     return (
       <Downshift
         onChange={this.props.onChange}
-        itemToString={propOr('', itemField)}
+        itemToString={getItemToStringFn(itemField)}
         selectedItem={this.props.selectedItem}>
           {renderComponents({ label, data, itemField })}
       </Downshift>
@@ -54,12 +53,12 @@ const renderLineItem = ({ itemField, getItemProps, highlightedIndex, selectedIte
     button
     selected={highlightedIndex === index}
     {...getItemProps({
-      key: propOr('', itemField, item),
+      key: getItemToStringFn(itemField)(item),
       index,
       item,
     })}
   >
-    <ListItemText primary={propOr('', itemField, item)} />
+    <ListItemText primary={getItemToStringFn(itemField)(item)} />
   </ListItem>
 )
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Autocomplete from '../autocomplete/autocomplete'
 import {isEmpty, without, map} from 'ramda'
+import {getItemToStringFn} from '../autocomplete/filter'
 
 class Multiselect extends Component {
   constructor (props) {
@@ -29,6 +30,7 @@ class Multiselect extends Component {
   aggregateOptions = () => {
     const aggregation = map(option => ({
       ...option,
+      name: getItemToStringFn(this.props.itemField)(option),
       onDelete: this.deleteOption(option)
     }))
     return aggregation(this.state.selection)
