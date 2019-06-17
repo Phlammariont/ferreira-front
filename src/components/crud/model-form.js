@@ -78,13 +78,13 @@ const getModelComponent = ({ instanceOf:Model }, value) => {
   if ( Model instanceof Array) {
     return connect(state => ({
       data: getCollection(new Model[0]().name)(state),
-      itemField: 'name',
+      itemField: new Model[0]().selectionField || 'name',
       selection: value
     }))(Multiselect)
   }
   return connect(state => ({
     data: getCollection(new Model().name)(state),
-    itemField: 'name',
+    itemField: new Model().selectionField || 'name',
     selectedItem: value
   }))(Autocomplete)
 }

@@ -2,6 +2,7 @@ import InventoryItem from '../../model/inventory-item'
 import Customer from '../../model/customer'
 import Product from '../../model/product'
 import Quotation from '../../model/quotation'
+import Purchase from '../../model/purchase'
 
 const getCrudActions =( model ) => ({
   SET_COLLECTION: `${model.toUpperCase()}.SET_COLLECTION`,
@@ -18,3 +19,4 @@ export const customer = getCrudActions(new Customer().name)
 export const product = getCrudActions(new Product().name)
 export const quotation = getCrudActions(new Quotation().name)
 export const inventoryItem = getCrudActions(new InventoryItem().name)
+export const purchase = getCrudActions(new Purchase().name)

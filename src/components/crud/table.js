@@ -44,7 +44,7 @@ const CellRenderReducer = reduce((Renders, field) => {
 
 const renderModel = ({Model, value }) => {
   if ( Model instanceof Array) {
-    return map(item => <span key={item.id}>{new Model[0](item).toString()}</span>, value)
+    return map(item => <span key={item.id}> {new Model[0](item).toString()} </span>, value)
   }
   return new Model(value).toString()
 }
