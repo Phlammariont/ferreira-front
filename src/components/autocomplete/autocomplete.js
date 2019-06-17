@@ -15,7 +15,7 @@ class Autocomplete extends Component{
     itemField: PropTypes.string.isRequired,
   }
   render () {
-    const {label, data, itemField} = this.props
+    const {label, data, itemField = ''} = this.props
     return (
       <Downshift
         onChange={this.props.onChange}
