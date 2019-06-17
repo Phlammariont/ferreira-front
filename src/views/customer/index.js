@@ -3,7 +3,7 @@ import Crud from '../../components/crud'
 import customer from '../../model/customer'
 import NewCustomerForm from './NewCustomerForm'
 import {getCustomerCollection} from '../../selectors/customer'
-import { fetchCustomers, setCustomerCollection } from '../../redux/actions/creators/customer'
+import { fetchCustomers } from '../../redux/actions/creators/customer'
 import {connect} from 'react-redux'
 
 class CustomerView extends Component {
