@@ -47,7 +47,7 @@ class Multiselect extends Component {
           itemField={this.props.itemField}
           onChange={this.onSelection}
           fullWidth={this.props.fullWidth}
-          selectedItem={null}
+          clearOnSelect
         />
       </div>
     )

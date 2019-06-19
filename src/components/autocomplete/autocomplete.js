@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import Downshift from 'downshift'
 import TextField from '@material-ui/core/TextField'
 import List from '@material-ui/core/List'
@@ -7,24 +7,28 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
 import {autocompleteFilter, getItemToStringFn} from './filter'
 import PropTypes from 'prop-types'
+import { isNil } from 'ramda'
 
-class Autocomplete extends Component{
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired,
-    itemField: PropTypes.string.isRequired,
+const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clearOnSelect} ) => {
+  const selectAndClear =  (selected, {clearSelection}) => {
+    if( isNil(selected) ) return
+    onChange(selected)
+    clearSelection()
   }
-  render () {
-    const {label, data, itemField = ''} = this.props
-    return (
-      <Downshift
-        onChange={this.props.onChange}
-        itemToString={getItemToStringFn(itemField)}
-        selectedItem={this.props.selectedItem}>
-          {renderComponents({ label, data, itemField })}
-      </Downshift>
-    )
-  }
+  const handleChange = clearOnSelect ? selectAndClear : onChange
+  return (
+    <Downshift
+      onChange={handleChange}
+      itemToString={getItemToStringFn(itemField)}
+      selectedItem={selectedItem}>
+        {renderComponents({ label, data, itemField })}
+    </Downshift>
+  )
+}
+Autocomplete.propTypes = {
+  label: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired,
+  itemField: PropTypes.string.isRequired,
 }
 
 const renderComponents = ({ label, data, itemField }) => ({ getInputProps, getLabelProps, ...menuProps }) => (

@@ -11,7 +11,13 @@ class Index extends Component {
           <Autocomplete label={'Mi Autocomplete'} data={[{name: 'leon'}, {name: 'Alejandra'}]} itemField={'name'}/>
         </div>
         <div>
-          <Multiselect label={'Mi Multiselect'} data={[{name: 'leon'}, {name: 'Alejandra'}]} itemField={'name'} onChange={options => alert(options)}/>
+          <Multiselect
+            label={'Mi Multiselect'} 
+            data={
+              [{name: 'Leon'}, {name: 'Alejandra'}]
+            } 
+            itemField={'name'} 
+            onChange={options => console.log(options)}/>
         </div>
       </div>
     )
