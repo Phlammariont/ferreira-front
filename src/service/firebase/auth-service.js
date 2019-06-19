@@ -44,7 +44,7 @@ const aggregateUserInfo = (userInfo, user) =>{
   }
 }
 
-const authenticate = ({user, password}) => {
+const authenticate = ({ user, password }) => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(() => {
       firebase.auth().signInWithEmailAndPassword(user, password)
