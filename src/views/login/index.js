@@ -2,17 +2,22 @@ import React, {useState} from 'react'
 import {propEq} from 'ramda'
 import Login from './Login'
 import ChangePassword from './ChangePassword'
+import authService from '../../service/firebase/auth-service'
 
 const needPasswordChange = propEq('changePasswordRequired', true)
 
-const LoginFlow = () => {
+const LoginFlow = ({onSuccessLogin}) => {
   const [changePassword, setChangePassword] = useState(false)
-  const checkUserConditions = async user => {
-    if(needPasswordChange(await user)) return setChangePassword( true )
+
+  const checkUserConditions = user => {
+    if(needPasswordChange(user)) return setChangePassword( true )
+    onSuccessLogin(user)
   }
 
-  if (changePassword) return <ChangePassword />
-  return <Login onAuthenticate={checkUserConditions}/>
+  authService.init({onAuthenticate: checkUserConditions})
+
+  if (changePassword) return <ChangePassword onChange={onSuccessLogin}/>
+  return <Login />
 }
 
 export default LoginFlow

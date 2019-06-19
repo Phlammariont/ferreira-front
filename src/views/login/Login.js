@@ -6,11 +6,11 @@ import {withStyles} from '@material-ui/core'
 import styles from './styles'
 import authService from '../../service/firebase/auth-service'
 
-const Login = ({classes, onAuthenticate}) => {
+const Login = ({classes}) => {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
 
-  const authenticate = () => authService.authenticate({onAuthenticate, user, password})
+  const authenticate = () => authService.authenticate({ user, password })
 
   return (
     <Paper className={classes.root}>
