@@ -29,12 +29,18 @@ class NewCustomerForm extends Component{
     this.props.onClose()
   }
 
+  renderTitle = () => {
+    if (this.props.isGuarantor)
+      return 'Datos del Codeudor'
+    return 'Datos del Cliente'
+  }
+
   render () {
     return (
       <div>
         <DialogContent>
           <DialogContentText>
-            Datos del Cliente.
+            {this.renderTitle()}
           </DialogContentText>
           <TextField
             autoFocus
