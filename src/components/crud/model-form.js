@@ -52,7 +52,6 @@ const ModelField = ({field, handleChange, value}) => {
   if (isNil(field.instanceOf)) return (
     <div>
       <TextField
-        autoFocus
         margin="dense"
         id={field.name}
         label={field.label}
