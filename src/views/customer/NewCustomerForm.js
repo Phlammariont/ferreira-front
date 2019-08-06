@@ -23,10 +23,11 @@ class NewCustomerForm extends Component{
     })
   }
 
-  saveCustomer = () => {
-    customerService.save(this.state.newCustomer)
+  saveCustomer = async () => {
+    await customerService.save(this.state.newCustomer)
+    this.props.onChange(this.state.newCustomer)
     this.setState({newCustomer: {}})
-    this.props.onClose()
+    return this.props.onClose()
   }
 
   renderTitle = () => {

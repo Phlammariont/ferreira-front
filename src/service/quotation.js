@@ -1,6 +1,5 @@
 import firebaseService from './firebase'
 
-
 const save = (quotation) => {
   firebaseService.saveModel({collection: 'quotation', model: quotation})
 }

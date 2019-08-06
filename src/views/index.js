@@ -13,6 +13,8 @@ import Purchase from './purchase'
 import Credits from './credits'
 import Inventory from './inventory'
 import NewCreditForm from './credits/NewCreditForm';
+import { StylesProvider } from '@material-ui/styles';
+import {Home} from './home'
 
 
 export const appStore  = store({})
@@ -29,6 +31,7 @@ class App extends PureComponent {
 
   render() {
     return (
+    <StylesProvider injectFirst>
       <Provider store={appStore}>
         <BrowserRouter>
           <div className="App">
@@ -38,6 +41,7 @@ class App extends PureComponent {
           </div>
         </BrowserRouter>
       </Provider>
+    </StylesProvider>
     )
   }
 }
@@ -55,7 +59,5 @@ const Routes = () => (
     <Route path="/super-component-index" component={ComponentIndex} />
   </Switch>
 )
-
-const Home = () => <h1>Hola Usuario</h1>
 
 export default App;

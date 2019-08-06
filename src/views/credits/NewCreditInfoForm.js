@@ -1,4 +1,4 @@
-import React, {useState, Component} from 'react'
+import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField'
 import {path} from 'ramda'
 import ModelForm from '../../components/crud/model-form'
@@ -33,7 +33,7 @@ class NewCreditInfoForm extends Component {
   )
 
   renderFeeFields = () => (
-    <div> hola ,mundo</div>
+    <div> hola mundo</div>
   )
 
   render() {
