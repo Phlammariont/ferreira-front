@@ -3,7 +3,7 @@ import Crud from '../../components/crud'
 import customer from '../../model/customer'
 import NewCustomerForm from './NewCustomerForm'
 import {getCustomerCollection} from '../../selectors/customer'
-import { fetchCustomers } from '../../redux/actions/creators/customer'
+import { fetchCustomers, deleteCustomer } from '../../redux/actions/creators/customer'
 import {connect} from 'react-redux'
 
 class CustomerView extends Component {
@@ -21,7 +21,11 @@ class CustomerView extends Component {
   render () {
     return (
       <main>
-        <Crud model={customer} newModelForm={NewCustomerForm} collection={this.props.customers}/>
+        <Crud
+          model={customer}
+          newModelForm={NewCustomerForm}
+          collection={this.props.customers}
+          actions={{ onDelete: this.props.deleteCustomer}}/>
       </main>
     )
   }
@@ -29,6 +33,7 @@ class CustomerView extends Component {
 
 const mapActions = {
   fetchCustomers,
+  deleteCustomer,
 }
 
 const stateToProps = state => ({

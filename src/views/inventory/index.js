@@ -4,7 +4,7 @@ import InventoryItem from '../../model/inventory-item'
 import Crud from '../../components/crud'
 import {fetchProducts} from '../../redux/actions/creators/product'
 import {getInventoryCollection} from '../../selectors/inventoryItem'
-import {fetchInventory, saveInventory} from '../../redux/actions/creators/inventory-item'
+import {deleteInventory, fetchInventory, saveInventory} from '../../redux/actions/creators/inventory-item'
 
 class PurchaseView extends Component {
   componentDidMount () {
@@ -15,7 +15,11 @@ class PurchaseView extends Component {
     const {inventoryItems, saveInventory} = this.props
     return (
       <main>
-        <Crud model={InventoryItem} collection={inventoryItems} onSave={saveInventory}/>
+        <Crud
+          model={InventoryItem}
+          collection={inventoryItems}
+          onSave={saveInventory}
+          actions={{onDelete: this.props.deleteInventory}} />
       </main>
     )
   }
@@ -29,6 +33,7 @@ const mapActions = {
   fetchProducts,
   fetchInventory,
   saveInventory,
+  deleteInventory,
 }
 
 export default connect(mapStateToProps, mapActions)(PurchaseView)

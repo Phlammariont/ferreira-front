@@ -2,7 +2,7 @@ import {  combineEpics, ofType } from 'redux-observable'
 import { from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators'
 import { createExternalError } from '../redux/actions/creators/errors'
-import {addModelToCollection, setModelCollection} from '../redux/actions/creators/general-model'
+import { addModelToCollection, setModelCollection, removeModelFromCollection } from '../redux/actions/creators/general-model'
 import modelService from '../service/general-model.js'
 
 const fetchEpic = (modelName, modelActions) => action$ => action$.pipe(
@@ -25,6 +25,19 @@ const addEpic = (modelName, modelActions) => action$ => action$.pipe(
   })
 )
 
-const genericEpicCreator = ({model, types}) => combineEpics(fetchEpic(new model().name, types), addEpic(new model().name, types))
+const deleteEpic = (modelName, modelActions) => action$ => action$.pipe(
+  ofType(modelActions.DELETE_FROM_COLLECTION),
+  mergeMap(action => from(modelService(modelName).delete(action.model)).pipe(
+    catchError(createExternalError),
+    map(removeModelFromCollection(modelActions))
+  ))
+)
+
+const genericEpicCreator = ({model, types}) =>
+  combineEpics(
+    fetchEpic(new model().name, types),
+    addEpic(new model().name, types),
+    deleteEpic(new model().name, types),
+  )
 
 export default genericEpicCreator

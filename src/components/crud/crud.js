@@ -18,7 +18,7 @@ class Crud extends Component {
     const model = new this.props.model()
     return (
       <div>
-        <CrudTable model={model} collection={this.props.collection}/>
+        <CrudTable {...this.props} model={model} />
         <NewModel {...this.props} />
       </div>
     )

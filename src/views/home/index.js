@@ -26,7 +26,7 @@ const UndecoratedLink = styled(Link)`
 
 const HomeTask = ({title, explanation, background, link}) => {
   return (
-    <UndecoratedLink to={ link }>
+    <UndecoratedLink to={ link } key={title + explanation}>
       <HomeTaskContainer elevation={2} background={background}><h3>{title}</h3><p>{explanation}</p></HomeTaskContainer>
     </UndecoratedLink>
   )

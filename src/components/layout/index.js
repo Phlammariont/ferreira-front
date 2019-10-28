@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 
 export const ActionsContainer = styled.div`
-  margin-top: 1rem
+  margin: 2rem
   display: flex
   flex-direction: row-reverse
   &>div {

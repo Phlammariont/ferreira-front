@@ -9,7 +9,7 @@ import {autocompleteFilter, getItemToStringFn} from './filter'
 import PropTypes from 'prop-types'
 import { isNil } from 'ramda'
 
-const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clearOnSelect} ) => {
+const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clearOnSelect, maxOptions} ) => {
   const selectAndClear =  (selected, {clearSelection}) => {
     if( isNil(selected) ) return
     onChange(selected)
@@ -21,7 +21,7 @@ const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clea
       onChange={handleChange}
       itemToString={getItemToStringFn(itemField)}
       selectedItem={selectedItem}>
-        {renderComponents({ label, data, itemField })}
+        {renderComponents({ label, data, itemField, maxOptions })}
     </Downshift>
   )
 }
@@ -31,12 +31,14 @@ Autocomplete.propTypes = {
   itemField: PropTypes.string.isRequired,
 }
 
-const renderComponents = ({ label, data, itemField }) => ({ getInputProps, getLabelProps, ...menuProps }) => (
-  <div>
-    { renderInput({ inputProps: getInputProps(), labelProps: getLabelProps(), label }) }
-    { menuProps.isOpen && renderList({ data, itemField, ...menuProps }) }
-  </div>
-)
+const renderComponents = ({ label, data, itemField, maxOptions }) => {
+  return ({getInputProps, getLabelProps, ...menuProps}) => (
+    <div>
+      {renderInput({inputProps: getInputProps(), labelProps: getLabelProps(), label})}
+      {menuProps.isOpen && renderList({data, itemField, maxOptions, ...menuProps})}
+    </div>
+  )
+}
 
 const renderList = ({ getMenuProps, ...listProps }) => {
   return (
@@ -48,8 +50,8 @@ const renderList = ({ getMenuProps, ...listProps }) => {
   )
 }
 
-const renderItems = ({ isOpen, data, inputValue, itemField, ...lineItemProps }) =>
-  autocompleteFilter({ data, inputValue, itemField})
+const renderItems = ({ isOpen, data, inputValue, itemField, maxOptions, ...lineItemProps }) =>
+  autocompleteFilter({ data, inputValue, itemField, maxOptions})
     .map(renderLineItem({itemField, ...lineItemProps}))
 
 const renderLineItem = ({ itemField, getItemProps, highlightedIndex, selectedItem }) => (item, index) => (

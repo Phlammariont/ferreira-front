@@ -5,11 +5,13 @@ import React from 'react'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import DeleteForever from '@material-ui/icons/DeleteForever'
+import Fab from '@material-ui/core/Fab'
 
-const CrudTable = ({ model: { fields }, collection }) => (
+const CrudTable = ({ model: { fields }, collection, actions }) => (
   <Table>
     <TableHeader fields={fields}/>
-    <TableContent fields={fields} collection={collection}/>
+    <TableContent fields={fields} collection={collection} actions={actions}/>
   </Table>
 )
 
@@ -17,23 +19,28 @@ const TableHeader = ({fields}) => (
   <TableHead>
     <TableRow>
       {map(TableCellHeader, fields)}
+      <TableCell key='actions'>Actions</TableCell>
     </TableRow>
   </TableHead>
 )
 
-const TableContent = ({fields, collection}) => (
+const TableContent = ({fields, collection, actions}) => (
   <TableBody>
-    {collection && map(Row(fields), collection)}
+    {collection && map(Row(fields, actions), collection)}
   </TableBody>
 )
 
 const TableCellHeader = ({label, isHide}) => isHide ? null : <TableCell key={label}>{label}</TableCell>
 
-const Row = fields => item => (
-  <TableRow key={item.id}>
-    {values(evolve(CellRenderReducer(fields), item))}
-  </TableRow>
-)
+const Row = (fields, actions) => item => {
+  if (isNil(item) || item.isDeleted) return null
+  return (
+    <TableRow key={item.id}>
+      {values(evolve(CellRenderReducer(fields), item))}
+      {renderActions(actions, item)}
+    </TableRow>
+  )
+}
 
 const CellRenderReducer = reduce((Renders, field) => {
   return {
@@ -56,6 +63,12 @@ const Cell = field => value => {
       {isNil(field.instanceOf) ? value : renderModel({ Model: field.instanceOf, value })}
     </TableCell>
   )
+}
+
+const renderActions = (actions, item) => {
+  return <TableCell key={'actions-'+ (item.id)}>
+    <Fab onClick={() => actions.onDelete(item)}><DeleteForever>delete_forever</DeleteForever></Fab>
+  </TableCell>
 }
 
 export default CrudTable

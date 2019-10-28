@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import priceService from '../../service/price-service'
+import priceService from '../../service/product'
 import Crud from '../../components/crud'
 import product from '../../model/product'
 import NewPriceForm from './new-price-list'

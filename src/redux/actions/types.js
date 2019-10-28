@@ -9,6 +9,8 @@ const getCrudActions =( model ) => ({
   FETCH_COLLECTION: `${model.toUpperCase()}.FETCH_COLLECTION`,
   ADD_TO_COLLECTION: `${model.toUpperCase()}.ADD_TO_COLLECTION`,
   ADD_TO_COLLECTION_SUCCESS: `${model.toUpperCase()}.ADD_TO_COLLECTION_SUCCESS`,
+  DELETE_FROM_COLLECTION: `${model.toUpperCase()}.DELETE_FROM_COLLECTION`,
+  DELETE_FROM_COLLECTION_SUCCESS: `${model.toUpperCase()}.DELETE_FROM_COLLECTION_SUCCESS`,
 })
 
 export const error = {

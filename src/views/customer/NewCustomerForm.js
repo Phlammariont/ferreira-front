@@ -25,7 +25,7 @@ class NewCustomerForm extends Component{
 
   saveCustomer = async () => {
     await customerService.save(this.state.newCustomer)
-    this.props.onChange(this.state.newCustomer)
+    if (this.props.onChange) this.props.onChange(this.state.newCustomer)
     this.setState({newCustomer: {}})
     return this.props.onClose()
   }

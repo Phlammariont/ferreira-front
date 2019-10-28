@@ -9,7 +9,7 @@ export const removeAudit = omit(['audit'])
 const getChangePasswordRequired = propOr(true, 'changePasswordRequired')
 
 const AuthState = {
-  userInfo: {}
+  userInfo: {locationId: null}
 }
 
 const setUserInfo = info => AuthState.userInfo = info
@@ -25,8 +25,8 @@ const getAudit = () => {
   const userInfo = AuthState.userInfo
   return {
     audit: {
-      user: user.uid,
-      locationId: userInfo.locationId
+      user: propOr(null, 'uid', user),
+      locationId: propOr(null, 'locationId', userInfo)
     }
   }
 }

@@ -2,7 +2,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import TextField from '@material-ui/core/TextField'
 import React, {Component} from 'react'
-import priceService from '../../service/price-service'
+import productService from '../../service/product'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 
@@ -24,7 +24,7 @@ class NewPriceForm extends Component{
   }
 
   savePrice = () => {
-    priceService.save(this.state.newPrice)
+    productService.save(this.state.newPrice)
     this.setState({newPrice: {}})
     this.props.onClose()
   }
