@@ -1,6 +1,7 @@
 import Model from '../components/crud/model'
 import Customer from './customer'
 import InventoryItem from './inventory-item'
+import {isNil} from 'ramda'
 
 class Purchase extends Model {
   name = 'purchase'
@@ -14,3 +15,10 @@ class Purchase extends Model {
 }
 
 export default Purchase
+
+export const isValidPurchase = purchase => {
+  if(isNil(purchase)) return false
+  if(isNil(purchase.items) || purchase.items.length < 1) return false
+  if(isNaN(purchase.price) || Number(purchase.price) < 0) return false
+  return true
+}

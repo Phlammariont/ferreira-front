@@ -9,7 +9,7 @@ import {autocompleteFilter, getItemToStringFn} from './filter'
 import PropTypes from 'prop-types'
 import { isNil } from 'ramda'
 
-const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clearOnSelect, maxOptions} ) => {
+const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clearOnSelect, maxOptions, autoFocus} ) => {
   const selectAndClear =  (selected, {clearSelection}) => {
     if( isNil(selected) ) return
     onChange(selected)
@@ -21,7 +21,7 @@ const Autocomplete = ({label, data, itemField = '', onChange, selectedItem, clea
       onChange={handleChange}
       itemToString={getItemToStringFn(itemField)}
       selectedItem={selectedItem}>
-        {renderComponents({ label, data, itemField, maxOptions })}
+        {renderComponents({ label, data, itemField, maxOptions, autoFocus })}
     </Downshift>
   )
 }
@@ -31,10 +31,10 @@ Autocomplete.propTypes = {
   itemField: PropTypes.string.isRequired,
 }
 
-const renderComponents = ({ label, data, itemField, maxOptions }) => {
+const renderComponents = ({ label, data, itemField, maxOptions, autoFocus }) => {
   return ({getInputProps, getLabelProps, ...menuProps}) => (
     <div>
-      {renderInput({inputProps: getInputProps(), labelProps: getLabelProps(), label})}
+      {renderInput({inputProps: getInputProps(), labelProps: getLabelProps(), label, autoFocus})}
       {menuProps.isOpen && renderList({data, itemField, maxOptions, ...menuProps})}
     </div>
   )
@@ -68,9 +68,10 @@ const renderLineItem = ({ itemField, getItemProps, highlightedIndex, selectedIte
   </ListItem>
 )
 
-const renderInput = ({inputProps, labelProps, label}) => {
+const renderInput = ({inputProps, labelProps, label, autoFocus}) => {
   const { InputProps, ref, ...other } = inputProps;
     return <TextField
+      autoFocus
       fullWidth={true}
       label={`${label}`}
       InputProps={{

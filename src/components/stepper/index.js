@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import Stepper from '@material-ui/core/Stepper'
 import Typography from '@material-ui/core/Typography'
 import Step from '@material-ui/core/Step'
@@ -6,12 +7,17 @@ import StepButton from '@material-ui/core/StepButton'
 import {propEq} from 'ramda'
 import {Paper} from '@material-ui/core'
 
+const StepperContainer = styled(Paper)`
+  padding: 15px 0;
+`
+
 const isStepOptional = () => false
 const isStepSkipped = () => false
 const isStepComplete = propEq('complete', true)
 
-const FerreiraStepper = ({activeStep, steps, handleStep}) => (
-  <Paper>
+const FerreiraStepper = ({activeStep, steps, handleStep, children}) => (
+  <StepperContainer>
+    {children}
     <Stepper alternativeLabel nonLinear activeStep={activeStep}>
       {steps.map((label, index) => {
         const stepProps = {};
@@ -35,7 +41,7 @@ const FerreiraStepper = ({activeStep, steps, handleStep}) => (
         );
       })}
     </Stepper>
-  </Paper>
+  </StepperContainer>
 )
 
 export default FerreiraStepper

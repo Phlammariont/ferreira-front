@@ -29,6 +29,7 @@ const FindCustomer = ({open = false, close, customers, handleCustomer}) => {
             </CustomerContainer>
           )}
           <Autocomplete
+            autoFocus
             label='Cedula'
             data={customers}
             itemField='legalId'

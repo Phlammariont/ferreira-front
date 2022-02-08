@@ -12,7 +12,7 @@ import {getCollection} from '../../selectors/utils'
 
 const isHide = propEq('isHide', true)
 
-const  ModelForm = ({ model, onClose, onSave }) => {
+const  ModelFormDialog = ({ model, onClose, onSave }) => {
   const [newModel, setNewModel] = useState({})
   const modelInstance = new model()
 
@@ -40,6 +40,15 @@ const  ModelForm = ({ model, onClose, onSave }) => {
   )
 }
 
+export const ModelFormControls = ({ model, currentValue: newModel = {}, handleChange: setNewModel }) => {
+  const modelInstance = new model()
+  return (
+    <>
+      {renderFields({ fields: modelInstance.fields, model: newModel, handleChange: setNewModel })}
+    </>
+  )
+}
+
 const renderFields = ({fields, model, handleChange}) => {
   const handleFieldChange = name => value => handleChange({ ...model, [name]: value})
   return map( field => {
@@ -56,6 +65,7 @@ const ModelField = ({field, handleChange, value}) => {
         id={field.name}
         label={field.label}
         type="text"
+        value={value}
         fullWidth
         onChange={evt => handleChange(evt.target.value)}
       />
@@ -88,4 +98,4 @@ const getModelComponent = ({ instanceOf:Model }, value) => {
   }))(Autocomplete)
 }
 
-export default ModelForm
+export default ModelFormDialog

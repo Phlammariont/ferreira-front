@@ -11,7 +11,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Viewer = ({children}) => {
+const Viewer = ({ display, children }) => {
+  if (!display) return null
   const classes = useStyles()
   return <Paper className={classes.root}>{children}</Paper>
 }

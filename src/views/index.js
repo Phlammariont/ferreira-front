@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import { Provider } from 'react-redux'
 import {BrowserRouter, Route, Switch} from "react-router-dom"
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import store from '../redux'
 import '../App.css'
 import NavBar from '../components/nav-bar'
@@ -13,11 +14,23 @@ import Purchase from './purchase'
 import Credits from './credits'
 import Inventory from './inventory'
 import NewCreditForm from './credits/NewCreditForm';
-import { StylesProvider } from '@material-ui/styles';
-import {Home} from './home'
+import { Home } from './home'
 
 
 export const appStore  = store({})
+
+const theme = createMuiTheme({
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  backgroundGrey: '#414141',
+  palette: {
+    primary: {
+      main: '#FDCC27'
+    },
+    secondary: {
+      main: '#202020',
+    },
+  },
+});
 
 class App extends PureComponent {
   constructor (props) {
@@ -31,7 +44,7 @@ class App extends PureComponent {
 
   render() {
     return (
-    <StylesProvider injectFirst>
+    <ThemeProvider theme={theme} >
       <Provider store={appStore}>
         <BrowserRouter>
           <div className="App">
@@ -41,7 +54,7 @@ class App extends PureComponent {
           </div>
         </BrowserRouter>
       </Provider>
-    </StylesProvider>
+    </ThemeProvider>
     )
   }
 }

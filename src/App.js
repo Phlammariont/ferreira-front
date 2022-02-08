@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Login from './views/login'
 import Views from './views'
-import {isNil} from 'ramda'
+import { isNil } from 'ramda'
 
 class App extends Component {
   state = {}
@@ -9,7 +9,8 @@ class App extends Component {
     this.setState({user})
   }
   render () {
-    return isNil(this.state.user) ? <Login onSuccessLogin={this.setUser}/> : <Views user={{...this.state.user}}/>
+    if (isNil(this.state.user)) return <Login onSuccessLogin={this.setUser}/>
+    return <Views user={{...this.state.user}}/>
   }
 }
 
